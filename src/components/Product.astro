@@ -1,6 +1,9 @@
 ---
 import { COPY } from '../lib/copy';
 import { TOKENS } from '../lib/tokens';
+import Placeholder from './Placeholder.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
 
 interface Props {
   lang: string;
@@ -13,11 +16,101 @@ const T = TOKENS;
 ---
 
 <section style={{
-  padding: isMobile ? '40px 20px' : '80px 56px',
-  background: T.bgSoft,
+  padding: isMobile ? '40px 20px' : '120px 72px',
+  maxWidth: 1440,
+  margin: '0 auto',
 }}>
-  <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-    <h2 style={{ fontSize: 32, margin: '0 0 40px 0' }}>Product</h2>
-    <!-- Placeholder for product section -->
+  <div style={{
+    display: 'grid',
+    gap: isMobile ? 24 : 40,
+    gridTemplateColumns: isMobile ? '1fr' : '5fr 7fr',
+  }}>
+    <div style={{
+      position: 'sticky',
+      top: 40,
+      alignSelf: 'start',
+    }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 18,
+      }}>
+        <Icon name="lab" size={16} color={T.sage} />
+        <span style={{
+          fontFamily: '"JetBrains Mono", monospace',
+          fontSize: 11,
+          letterSpacing: 0.8,
+          textTransform: 'uppercase',
+          color: T.sage,
+        }}>
+          {C.product.eyebrow}
+        </span>
+      </div>
+      <h2 style={{
+        fontFamily: '"Instrument Serif", serif',
+        fontWeight: 400,
+        fontSize: isMobile ? 36 : 56,
+        lineHeight: 1.02,
+        letterSpacing: -1.5,
+        margin: 0,
+      }}>
+        {C.product.title}
+      </h2>
+    </div>
+    <div>
+      <Placeholder
+        kind="clinical"
+        label="Instrument · 3/4 view"
+        height={isMobile ? 260 : 420}
+        radius={T.radiusXl}
+        style={{ marginBottom: 32 }}
+      />
+      <p style={{
+        fontSize: isMobile ? 16 : 18,
+        lineHeight: 1.55,
+        color: T.inkSoft,
+        margin: '0 0 28px 0',
+        maxWidth: 620,
+      }}>
+        {C.product.body}
+      </p>
+      <div style={{
+        display: 'grid',
+        gap: 14,
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        marginBottom: 32,
+      }}>
+        {C.product.bullets.map((b, i) => (
+          <div
+            key={i}
+            style={{
+              display: 'flex',
+              gap: 12,
+              alignItems: 'flex-start',
+              padding: '16px 0',
+              borderTop: `1px solid ${T.line}`,
+            }}
+          >
+            <span style={{
+              fontFamily: '"JetBrains Mono", monospace',
+              fontSize: 11,
+              color: T.sage,
+              letterSpacing: 0.4,
+            }}>
+              0{i + 1}
+            </span>
+            <span style={{
+              fontSize: 15,
+              color: T.ink,
+              lineHeight: 1.4,
+            }}>
+              {b}
+            </span>
+          </div>
+        ))}
+      </div>
+      <Button tone="ink" size="lg" icon="arrow">{C.product.cta}</Button>
+    </div>
   </div>
 </section>

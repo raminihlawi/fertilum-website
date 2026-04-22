@@ -1,6 +1,8 @@
 ---
 import { COPY } from '../lib/copy';
 import { TOKENS } from '../lib/tokens';
+import Placeholder from './Placeholder.astro';
+import Button from './Button.astro';
 
 interface Props {
   lang: string;
@@ -19,14 +21,47 @@ const T = TOKENS;
   borderBottomLeftRadius: 40,
   borderBottomRightRadius: 40,
 }}>
-  <!-- Background gradient -->
+  <!-- Full-bleed background -->
   <div style={{
     position: 'absolute',
     inset: 0,
     background: `linear-gradient(180deg, ${T.ink} 0%, ${T.sageDeep} 40%, ${T.sage} 100%)`,
-  }}></div>
+  }}>
+    <!-- Abstract imagery treatment -->
+    <div aria-hidden style={{
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 80% 30%, rgba(244,217,201,0.35), transparent 55%),
+                   radial-gradient(ellipse at 20% 90%, rgba(212,229,217,0.25), transparent 55%)`,
+    }}></div>
+    <div aria-hidden style={{
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: 'repeating-linear-gradient(45deg, transparent 0 30px, rgba(255,255,255,0.03) 30px 31px)',
+    }}></div>
 
-  <!-- Content -->
+    <!-- Image card -->
+    <div style={{
+      position: 'absolute',
+      right: isMobile ? '50%' : 80,
+      bottom: isMobile ? 60 : 80,
+      transform: isMobile ? 'translateX(50%)' : 'none',
+      borderRadius: T.radiusLg,
+      overflow: 'hidden',
+      boxShadow: '0 30px 80px rgba(0,0,0,0.4)',
+      border: '1px solid rgba(255,255,255,0.2)',
+    }}>
+      <Placeholder
+        kind="clinical"
+        label="Hero photo · clinical lab, morning light"
+        width={isMobile ? 260 : 420}
+        height={isMobile ? 160 : 260}
+        radius={0}
+      />
+    </div>
+  </div>
+
+  <!-- Overlaid content -->
   <div style={{
     position: 'relative',
     zIndex: 2,
@@ -75,6 +110,7 @@ const T = TOKENS;
       fontSize: isMobile ? 15 : 17,
       lineHeight: 1.55,
       color: 'rgba(255,255,255,0.78)',
+      margin: `${isMobile ? 24 : 40}px 0 0 0`,
     }}>
       {C.hero.sub}
     </p>
@@ -85,18 +121,28 @@ const T = TOKENS;
       gap: 12,
       flexWrap: 'wrap',
     }}>
-      <button style={{
-        padding: '12px 24px',
-        borderRadius: 8,
-        border: 'none',
-        background: '#fff',
-        color: T.ink,
-        fontWeight: 500,
-        fontSize: 14,
-        cursor: 'pointer',
-      }}>
-        {C.nav.contact}
-      </button>
+      <Button tone="white" size="lg" icon="arrow">{C.nav.contact}</Button>
     </div>
   </div>
+
+  <!-- Scroll hint -->
+  {!isMobile && (
+    <div style={{
+      position: 'absolute',
+      bottom: 28,
+      left: 72,
+      zIndex: 2,
+      fontFamily: '"JetBrains Mono", monospace',
+      fontSize: 11,
+      letterSpacing: 0.6,
+      textTransform: 'uppercase',
+      color: 'rgba(255,255,255,0.55)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 10,
+    }}>
+      <span>Scroll</span>
+      <span style={{ width: 40, height: 1, background: 'rgba(255,255,255,0.4)' }} />
+    </div>
+  )}
 </section>

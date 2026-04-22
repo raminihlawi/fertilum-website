@@ -1,0 +1,59 @@
+---
+import { TOKENS } from '../lib/tokens';
+
+interface Props {
+  kind?: 'clinical' | 'lifestyle' | 'product' | 'science' | 'ink';
+  label?: string;
+  height?: string | number;
+  width?: string | number;
+  radius?: string;
+  style?: Record<string, any>;
+}
+
+const { kind = 'clinical', label, height = '100%', width = '100%', radius = TOKENS.radiusLg, style = {} } = Astro.props;
+
+const palettes = {
+  clinical: { bg: TOKENS.sageMist, stripe: 'rgba(74,138,123,0.18)', ink: TOKENS.sageDeep },
+  lifestyle: { bg: TOKENS.peach, stripe: 'rgba(217,163,137,0.35)', ink: '#6b3d28' },
+  product: { bg: TOKENS.cream, stripe: 'rgba(180,140,90,0.2)', ink: '#6e5433' },
+  science: { bg: '#2d423d', stripe: 'rgba(212,229,217,0.12)', ink: '#d4e5d9' },
+  ink: { bg: TOKENS.ink, stripe: 'rgba(255,255,255,0.06)', ink: TOKENS.sageSoft },
+};
+
+const p = palettes[kind] || palettes.clinical;
+const stripePattern = `repeating-linear-gradient(135deg, transparent 0 14px, ${p.stripe} 14px 15px)`;
+
+const heightStr = typeof height === 'number' ? `${height}px` : height;
+const widthStr = typeof width === 'number' ? `${width}px` : width;
+---
+
+<div style={{
+  width: widthStr,
+  height: heightStr,
+  background: p.bg,
+  borderRadius: radius,
+  position: 'relative',
+  overflow: 'hidden',
+  ...style,
+}}>
+  <div style={{
+    position: 'absolute',
+    inset: 0,
+    backgroundImage: stripePattern,
+  }}></div>
+  {label && (
+    <div style={{
+      position: 'absolute',
+      left: 16,
+      bottom: 14,
+      fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+      fontSize: 11,
+      letterSpacing: 0.5,
+      textTransform: 'uppercase',
+      color: p.ink,
+      opacity: 0.75,
+    }}>
+      {label}
+    </div>
+  )}
+</div>

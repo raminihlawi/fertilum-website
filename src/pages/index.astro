@@ -1,4 +1,5 @@
 ---
+import { TOKENS } from '../lib/tokens';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
@@ -11,10 +12,16 @@ import Footer from '../components/Footer.astro';
 
 const lang = 'en';
 const isMobile = false;
+const T = TOKENS;
 ---
 
 <BaseLayout title="Fertilum — Precision Fertility Diagnostics">
-  <main>
+  <main style={{
+    background: T.bg,
+    color: T.ink,
+    fontFamily: '"Inter", -apple-system, system-ui, sans-serif',
+    overflow: 'hidden',
+  }}>
     <Nav {lang} {isMobile} />
     <Hero {lang} {isMobile} />
     <SplitEntry {lang} {isMobile} />

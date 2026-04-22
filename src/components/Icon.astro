@@ -1,0 +1,36 @@
+---
+interface Props {
+  name: string;
+  size?: number;
+  color?: string;
+  strokeWidth?: number;
+  style?: Record<string, any>;
+}
+
+const { name, size = 18, color = 'currentColor', strokeWidth = 1.6, style = {} } = Astro.props;
+
+const paths: Record<string, string> = {
+  arrow: 'M4 10h12M12 6l4 4-4 4',
+  arrowDown: 'M10 4v12M6 12l4 4 4-4',
+  check: 'M4 10.5l3.5 3.5L16 5.5',
+  lab: 'M6.5 3h7v4H6.5zM7 8l-2.5 7a2 2 0 001.8 2.9h7.4a2 2 0 001.8-2.9L13 8M7.5 13h5',
+  pill: 'M3.5 7h13v6h-13zM10 7v6',
+  dna: 'M6 3c3 2 5 4 5 7s-2 5-5 7M14 3c-3 2-5 4-5 7s2 5 5 7M7 6h6M7 10h6M7 14h6',
+};
+
+const d = paths[name] || paths.arrow;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 20 20"
+  fill="none"
+  stroke={color}
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  style={style}
+>
+  <path d={d} />
+</svg>

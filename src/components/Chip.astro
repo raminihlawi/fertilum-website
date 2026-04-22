@@ -1,0 +1,36 @@
+---
+import { TOKENS } from '../lib/tokens';
+
+interface Props {
+  tone?: 'sage' | 'peach' | 'line' | 'ink';
+  style?: Record<string, any>;
+}
+
+const { tone = 'sage', style = {} } = Astro.props;
+
+const tones = {
+  sage: { bg: TOKENS.sageMist, fg: TOKENS.sageDeep },
+  peach: { bg: TOKENS.peach, fg: '#6b3d28' },
+  line: { bg: 'transparent', fg: TOKENS.inkSoft, border: `1px solid ${TOKENS.lineStrong}` },
+  ink: { bg: TOKENS.ink, fg: '#fff' },
+};
+
+const t = tones[tone] || tones.sage;
+---
+
+<span style={{
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
+  padding: '6px 12px',
+  borderRadius: TOKENS.radiusPill,
+  fontSize: 12,
+  fontWeight: 500,
+  letterSpacing: 0.1,
+  background: t.bg,
+  color: t.fg,
+  border: t.border || 'none',
+  ...style,
+}}>
+  <slot />
+</span>

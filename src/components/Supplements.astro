@@ -1,6 +1,8 @@
 ---
 import { COPY } from '../lib/copy';
 import { TOKENS } from '../lib/tokens';
+import Placeholder from './Placeholder.astro';
+import Icon from './Icon.astro';
 
 interface Props {
   lang: string;
@@ -13,11 +15,106 @@ const T = TOKENS;
 ---
 
 <section style={{
-  padding: isMobile ? '40px 20px' : '80px 56px',
-  background: T.bg,
+  padding: isMobile ? '60px 20px' : '140px 72px',
+  background: `linear-gradient(180deg, ${T.bg} 0%, ${T.cream} 100%)`,
 }}>
-  <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-    <h2 style={{ fontSize: 32, margin: '0 0 40px 0' }}>Supplements</h2>
-    <!-- Placeholder for supplements section -->
+  <div style={{
+    maxWidth: 1280,
+    margin: '0 auto',
+  }}>
+    <div style={{
+      textAlign: 'center',
+      maxWidth: 720,
+      margin: '0 auto 56px',
+    }}>
+      <div style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 20,
+      }}>
+        <Icon name="pill" size={16} color={T.peachDeep} />
+        <span style={{
+          fontFamily: '"JetBrains Mono", monospace',
+          fontSize: 11,
+          letterSpacing: 0.8,
+          textTransform: 'uppercase',
+          color: T.peachDeep,
+        }}>
+          {C.supplements.eyebrow}
+        </span>
+      </div>
+      <h2 style={{
+        fontFamily: '"Instrument Serif", serif',
+        fontWeight: 400,
+        fontSize: isMobile ? 34 : 56,
+        lineHeight: 1.02,
+        letterSpacing: -1.5,
+        margin: '0 0 20px 0',
+      }}>
+        {C.supplements.title}
+      </h2>
+      <p style={{
+        fontSize: isMobile ? 15 : 17,
+        lineHeight: 1.55,
+        color: T.inkSoft,
+        margin: 0,
+      }}>
+        {C.supplements.body}
+      </p>
+    </div>
+
+    <!-- Offset cards -->
+    <div style={{
+      display: 'grid',
+      gap: isMobile ? 14 : 24,
+      gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+      alignItems: 'start',
+    }}>
+      {C.supplements.items.map((it, i) => {
+        const offsetY = isMobile ? 0 : [0, 40, 0][i];
+        const kind = ['product', 'lifestyle', 'clinical'][i];
+        return (
+          <div key={i} style={{ transform: `translateY(${offsetY}px)` }}>
+            <Placeholder
+              kind={kind}
+              label={it.name}
+              height={isMobile ? 240 : 360}
+              radius={T.radiusLg}
+              style={{ marginBottom: 18 }}
+            />
+            <div style={{
+              fontFamily: '"JetBrains Mono", monospace',
+              fontSize: 11,
+              letterSpacing: 0.6,
+              textTransform: 'uppercase',
+              color: T.inkMuted,
+              marginBottom: 6,
+            }}>
+              {it.role}
+            </div>
+            <div style={{
+              fontFamily: '"Instrument Serif", serif',
+              fontWeight: 400,
+              fontSize: 26,
+              lineHeight: 1.1,
+              letterSpacing: -0.5,
+              marginBottom: 8,
+              color: T.ink,
+            }}>
+              {it.name}
+            </div>
+            <p style={{
+              fontSize: 14,
+              lineHeight: 1.55,
+              color: T.inkSoft,
+              margin: 0,
+            }}>
+              {it.desc}
+            </p>
+          </div>
+        );
+      })}
+    </div>
   </div>
 </section>

@@ -1,6 +1,7 @@
 ---
 import { COPY } from '../lib/copy';
 import { TOKENS } from '../lib/tokens';
+import Button from './Button.astro';
 
 interface Props {
   lang: string;
@@ -13,23 +14,57 @@ const T = TOKENS;
 ---
 
 <section style={{
-  padding: isMobile ? '40px 20px' : '80px 56px',
-  background: T.bg,
+  padding: isMobile ? '40px 20px 60px' : '80px 72px 120px',
 }}>
-  <div style={{ maxWidth: 1440, margin: '0 auto', textAlign: 'center' }}>
-    <h2 style={{ fontSize: 32, margin: '0 0 20px 0' }}>{C.cta.title}</h2>
-    <p style={{ fontSize: 18, color: T.inkMuted, margin: '0 0 40px 0' }}>{C.cta.sub}</p>
-    <button style={{
-      padding: '12px 24px',
-      borderRadius: 8,
-      border: 'none',
-      background: T.sage,
-      color: '#fff',
-      fontWeight: 500,
-      fontSize: 14,
-      cursor: 'pointer',
+  <div style={{
+    maxWidth: 1280,
+    margin: '0 auto',
+    background: T.sageMist,
+    borderRadius: T.radiusXl,
+    padding: isMobile ? '40px 24px' : '80px',
+    textAlign: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+  }}>
+    <div aria-hidden style={{
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(circle at 20% 0%, rgba(74,138,123,0.18), transparent 40%),
+                   radial-gradient(circle at 80% 100%, rgba(244,217,201,0.25), transparent 40%)`,
+    }}></div>
+    <div style={{
+      position: 'relative',
     }}>
-      {C.cta.primary}
-    </button>
+      <h2 style={{
+        fontFamily: '"Instrument Serif", serif',
+        fontWeight: 400,
+        fontSize: isMobile ? 32 : 56,
+        lineHeight: 1.05,
+        letterSpacing: -1.5,
+        margin: '0 auto 20px',
+        maxWidth: 900,
+        color: T.ink,
+      }}>
+        {C.cta.title}
+      </h2>
+      <p style={{
+        fontSize: isMobile ? 15 : 17,
+        lineHeight: 1.55,
+        color: T.inkSoft,
+        margin: '0 auto 32px',
+        maxWidth: 620,
+      }}>
+        {C.cta.sub}
+      </p>
+      <div style={{
+        display: 'inline-flex',
+        gap: 12,
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+      }}>
+        <Button tone="ink" size="lg" icon="arrow">{C.cta.primary}</Button>
+        <Button tone="ghost" size="lg" iconLeft="arrowDown">{C.cta.secondary}</Button>
+      </div>
+    </div>
   </div>
 </section>

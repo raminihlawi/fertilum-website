@@ -1,0 +1,64 @@
+---
+import { TOKENS } from '../lib/tokens';
+import Icon from './Icon.astro';
+
+interface Props {
+  tone?: 'ink' | 'sage' | 'soft' | 'ghost' | 'white';
+  size?: 'sm' | 'md' | 'lg';
+  icon?: string;
+  iconLeft?: string;
+  style?: Record<string, any>;
+  class?: string;
+}
+
+const { tone = 'ink', size = 'md', icon, iconLeft, style = {}, class: className } = Astro.props;
+
+const sizes = {
+  sm: { pad: '8px 14px', fs: 13, h: 34 },
+  md: { pad: '12px 20px', fs: 14, h: 44 },
+  lg: { pad: '16px 28px', fs: 15, h: 54 },
+};
+
+const tones = {
+  ink: { bg: TOKENS.ink, fg: '#fff', border: 'none' },
+  sage: { bg: TOKENS.sage, fg: '#fff', border: 'none' },
+  soft: { bg: TOKENS.sageMist, fg: TOKENS.sageDeep, border: 'none' },
+  ghost: { bg: 'transparent', fg: TOKENS.ink, border: `1px solid ${TOKENS.lineStrong}` },
+  white: { bg: '#fff', fg: TOKENS.ink, border: 'none' },
+};
+
+const s = sizes[size];
+const t = tones[tone];
+---
+
+<button
+  class={className}
+  style={{
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    padding: s.pad,
+    height: s.h,
+    fontSize: s.fs,
+    fontWeight: 500,
+    background: t.bg,
+    color: t.fg,
+    border: t.border,
+    borderRadius: TOKENS.radiusPill,
+    cursor: 'pointer',
+    letterSpacing: -0.1,
+    transition: 'all 160ms ease',
+    fontFamily: 'inherit',
+    ...style,
+  }}
+>
+  {iconLeft && <Icon name={iconLeft} size={s.fs + 2} color="currentColor" />}
+  <slot />
+  {icon && <Icon name={icon} size={s.fs + 2} color="currentColor" />}
+</button>
+
+<style>
+  button:hover {
+    transform: translateY(-1px);
+  }
+</style>
