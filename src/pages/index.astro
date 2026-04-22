@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import SplitEntry from '../components/SplitEntry.astro';
+import Product from '../components/Product.astro';
+import Supplements from '../components/Supplements.astro';
+import Science from '../components/Science.astro';
+import CTA from '../components/CTA.astro';
+import Footer from '../components/Footer.astro';
+
+const lang = 'en';
+const isMobile = false;
+---
+
+<BaseLayout title="Fertilum — Precision Fertility Diagnostics">
+  <main>
+    <Nav {lang} {isMobile} />
+    <Hero {lang} {isMobile} />
+    <SplitEntry {lang} {isMobile} />
+    <Product {lang} {isMobile} />
+    <Supplements {lang} {isMobile} />
+    <Science {lang} {isMobile} />
+    <CTA {lang} {isMobile} />
+    <Footer {lang} {isMobile} />
+  </main>
+</BaseLayout>

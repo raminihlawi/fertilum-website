@@ -1,0 +1,23 @@
+---
+import { COPY } from '../lib/copy';
+import { TOKENS } from '../lib/tokens';
+
+interface Props {
+  lang: string;
+  isMobile: boolean;
+}
+
+const { lang = 'en', isMobile = false } = Astro.props;
+const C = COPY[lang];
+const T = TOKENS;
+---
+
+<section style={{
+  padding: isMobile ? '40px 20px' : '80px 56px',
+  background: T.bg,
+}}>
+  <div style={{ maxWidth: 1440, margin: '0 auto' }}>
+    <h2 style={{ fontSize: 32, margin: '0 0 40px 0' }}>Supplements</h2>
+    <!-- Placeholder for supplements section -->
+  </div>
+</section>

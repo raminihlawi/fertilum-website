@@ -1,0 +1,18 @@
+{
+  "name": "fertilum-website",
+  "version": "1.0.0",
+  "description": "Fertilum corporate website — V2 design with Astro",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "astro dev"
+  },
+  "keywords": ["fertilum", "astro", "website"],
+  "author": "Fertilum",
+  "license": "MIT",
+  "dependencies": {
+    "astro": "^6.1.8"
+  }
+}
