@@ -1,104 +1,95 @@
 ---
 import { COPY } from '../lib/copy';
-import { TOKENS } from '../lib/tokens';
 
-interface Props {
-  lang: string;
-  isMobile: boolean;
-}
-
+interface Props { lang: string; isMobile: boolean; }
 const { lang = 'en', isMobile = false } = Astro.props;
 const C = COPY[lang];
-const T = TOKENS;
 ---
 
-<header style={{
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  zIndex: 10,
-}}>
-  <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: isMobile ? '18px 20px' : '28px 56px',
-  }}>
-    <div style={{
-      fontFamily: '"Lobster", cursive',
-      fontSize: isMobile ? 22 : 28,
-      color: '#fff',
-    }}>fertilum</div>
+<header class="nav">
+  <div class="nav__inner">
+    <span class="nav__logo">fertilum</span>
 
     {!isMobile && (
-      <nav style={{
-        display: 'flex',
-        gap: '32px',
-        fontSize: '14px',
-        color: 'rgba(255,255,255,0.85)',
-        background: 'rgba(255,255,255,0.08)',
-        padding: '10px 22px',
-        borderRadius: '999px',
-        border: '1px solid rgba(255,255,255,0.15)',
-        backdropFilter: 'blur(14px)',
-      }}>
-        <span>{C.nav.clinicians}</span>
-        <span>{C.nav.consumers}</span>
-        <span>{C.nav.science}</span>
-        <span>{C.nav.about}</span>
+      <nav class="nav__links">
+        <a href="#">{C.nav.clinicians}</a>
+        <a href="#">{C.nav.consumers}</a>
+        <a href="#">{C.nav.science}</a>
+        <a href="#">{C.nav.about}</a>
       </nav>
     )}
 
-    <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-      <div style={{
-        display: 'flex',
-        gap: 2,
-        padding: 3,
-        borderRadius: 999,
-        background: 'rgba(255,255,255,0.1)',
-        border: '1px solid rgba(255,255,255,0.15)',
-        backdropFilter: 'blur(14px)',
-      }}>
-        {['EN', 'SV'].map((l) => (
-          <span
-            key={l}
-            style={{
-              padding: '4px 10px',
-              borderRadius: 999,
-              fontSize: 12,
-              fontWeight: 500,
-              background: l === C.lang ? '#fff' : 'transparent',
-              color: l === C.lang ? T.ink : 'rgba(255,255,255,0.85)',
-              cursor: 'pointer',
-            }}
-          >
-            {l}
-          </span>
+    <div class="nav__right">
+      <div class="nav__lang">
+        {['EN','SV'].map(l => (
+          <span class={`nav__lang-opt ${l === C.lang ? 'nav__lang-opt--active' : ''}`}>{l}</span>
         ))}
       </div>
-      {!isMobile && (
-        <button
-          style={{
-            padding: '8px 16px',
-            borderRadius: 8,
-            border: 'none',
-            background: '#fff',
-            color: T.ink,
-            fontWeight: 500,
-            fontSize: 14,
-            cursor: 'pointer',
-          }}
-        >
-          {C.nav.contact}
-        </button>
-      )}
+      {!isMobile && <button class="nav__cta">{C.nav.contact}</button>}
     </div>
   </div>
 </header>
 
 <style>
-  header {
+  .nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
     z-index: 10;
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 56px;
+  }
+  .nav__logo {
+    font-family: 'Lobster', cursive;
+    font-size: 28px;
+    color: #fff;
+    line-height: 1;
+    position: relative;
+  }
+  .nav__logo::after {
+    content: '';
+    position: absolute;
+    left: 18%; right: 10%;
+    bottom: -6%;
+    height: 1.5px;
+    background: #fff;
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+  .nav__links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.08);
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(14px);
+  }
+  .nav__links a { color: inherit; text-decoration: none; }
+  .nav__right { display: flex; align-items: center; gap: 10px; }
+  .nav__lang {
+    display: flex; gap: 2px; padding: 3px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(14px);
+  }
+  .nav__lang-opt {
+    padding: 4px 10px; border-radius: 999px;
+    font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,0.85); cursor: pointer;
+  }
+  .nav__lang-opt--active { background: #fff; color: #1a2e2a; }
+  .nav__cta {
+    padding: 8px 18px; border-radius: 999px; border: none;
+    background: #fff; color: #1a2e2a;
+    font-weight: 500; font-size: 14px; cursor: pointer;
+    font-family: inherit;
   }
 </style>

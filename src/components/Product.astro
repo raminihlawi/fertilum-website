@@ -1,116 +1,140 @@
 ---
 import { COPY } from '../lib/copy';
-import { TOKENS } from '../lib/tokens';
-import Placeholder from './Placeholder.astro';
-import Button from './Button.astro';
-import Icon from './Icon.astro';
+import { TOKENS as T } from '../lib/tokens';
 
-interface Props {
-  lang: string;
-  isMobile: boolean;
-}
-
+interface Props { lang: string; isMobile: boolean; }
 const { lang = 'en', isMobile = false } = Astro.props;
 const C = COPY[lang];
-const T = TOKENS;
 ---
 
-<section style={{
-  padding: isMobile ? '40px 20px' : '120px 72px',
-  maxWidth: 1440,
-  margin: '0 auto',
-}}>
-  <div style={{
-    display: 'grid',
-    gap: isMobile ? 24 : 40,
-    gridTemplateColumns: isMobile ? '1fr' : '5fr 7fr',
-  }}>
-    <div style={{
-      position: 'sticky',
-      top: 40,
-      alignSelf: 'start',
-    }}>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        marginBottom: 18,
-      }}>
-        <Icon name="lab" size={16} color={T.sage} />
-        <span style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 11,
-          letterSpacing: 0.8,
-          textTransform: 'uppercase',
-          color: T.sage,
-        }}>
-          {C.product.eyebrow}
-        </span>
+<section class="product">
+  <div class="product__inner">
+    <div class="product__sticky">
+      <div class="product__eyebrow">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6.5 3h7v4H6.5zM7 8l-2.5 7a2 2 0 001.8 2.9h7.4a2 2 0 001.8-2.9L13 8M7.5 13h5"/></svg>
+        {C.product.eyebrow}
       </div>
-      <h2 style={{
-        fontFamily: '"Instrument Serif", serif',
-        fontWeight: 400,
-        fontSize: isMobile ? 36 : 56,
-        lineHeight: 1.02,
-        letterSpacing: -1.5,
-        margin: 0,
-      }}>
-        {C.product.title}
-      </h2>
+      <h2 class="product__title">{C.product.title}</h2>
     </div>
-    <div>
-      <Placeholder
-        kind="clinical"
-        label="Instrument · 3/4 view"
-        height={isMobile ? 260 : 420}
-        radius={T.radiusXl}
-        style={{ marginBottom: 32 }}
-      />
-      <p style={{
-        fontSize: isMobile ? 16 : 18,
-        lineHeight: 1.55,
-        color: T.inkSoft,
-        margin: '0 0 28px 0',
-        maxWidth: 620,
-      }}>
-        {C.product.body}
-      </p>
-      <div style={{
-        display: 'grid',
-        gap: 14,
-        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-        marginBottom: 32,
-      }}>
+    <div class="product__content">
+      <div class="product__img">
+        <span class="product__img-label">Instrument · 3/4 view</span>
+      </div>
+      <p class="product__body">{C.product.body}</p>
+      <div class="product__bullets">
         {C.product.bullets.map((b, i) => (
-          <div
-            key={i}
-            style={{
-              display: 'flex',
-              gap: 12,
-              alignItems: 'flex-start',
-              padding: '16px 0',
-              borderTop: `1px solid ${T.line}`,
-            }}
-          >
-            <span style={{
-              fontFamily: '"JetBrains Mono", monospace',
-              fontSize: 11,
-              color: T.sage,
-              letterSpacing: 0.4,
-            }}>
-              0{i + 1}
-            </span>
-            <span style={{
-              fontSize: 15,
-              color: T.ink,
-              lineHeight: 1.4,
-            }}>
-              {b}
-            </span>
+          <div class="product__bullet">
+            <span class="product__bullet-num">0{i+1}</span>
+            <span>{b}</span>
           </div>
         ))}
       </div>
-      <Button tone="ink" size="lg" icon="arrow">{C.product.cta}</Button>
+      <a href="#contact" class="product__cta">
+        {C.product.cta}
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 10h12M12 6l4 4-4 4"/></svg>
+      </a>
     </div>
   </div>
 </section>
+
+<style define:vars={{ sage: T.sage, ink: T.ink, inkSoft: T.inkSoft, line: T.line, sageMist: T.sageMist, sageDeep: T.sageDeep, radiusXl: T.radiusXl }}>
+  .product {
+    padding: 120px 72px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .product__inner {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 40px;
+  }
+  .product__sticky {
+    position: sticky;
+    top: 40px;
+    align-self: start;
+  }
+  .product__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 18px;
+  }
+  .product__title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1.02;
+    letter-spacing: -1.5px;
+    margin: 0;
+    color: var(--ink);
+  }
+  .product__img {
+    height: 420px;
+    border-radius: var(--radiusXl);
+    background: var(--sageMist);
+    background-image: repeating-linear-gradient(135deg, transparent 0 14px, rgba(74,138,123,0.18) 14px 15px);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .product__img-label {
+    position: absolute;
+    left: 16px; bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--sageDeep);
+    opacity: 0.75;
+  }
+  .product__body {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--inkSoft);
+    margin: 0 0 28px 0;
+    max-width: 620px;
+  }
+  .product__bullets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 32px;
+  }
+  .product__bullet {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .product__bullet-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--sage);
+    letter-spacing: 0.4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .product__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 28px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: inherit;
+    transition: transform 160ms ease;
+  }
+  .product__cta:hover { transform: translateY(-1px); }
+</style>

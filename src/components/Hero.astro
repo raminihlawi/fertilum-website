@@ -1,148 +1,190 @@
 ---
 import { COPY } from '../lib/copy';
-import { TOKENS } from '../lib/tokens';
-import Placeholder from './Placeholder.astro';
-import Button from './Button.astro';
+import { TOKENS as T } from '../lib/tokens';
 
-interface Props {
-  lang: string;
-  isMobile: boolean;
-}
-
+interface Props { lang: string; isMobile: boolean; }
 const { lang = 'en', isMobile = false } = Astro.props;
 const C = COPY[lang];
-const T = TOKENS;
 ---
 
-<section style={{
-  position: 'relative',
-  overflow: 'hidden',
-  height: isMobile ? 640 : 820,
-  borderBottomLeftRadius: 40,
-  borderBottomRightRadius: 40,
-}}>
-  <!-- Full-bleed background -->
-  <div style={{
-    position: 'absolute',
-    inset: 0,
-    background: `linear-gradient(180deg, ${T.ink} 0%, ${T.sageDeep} 40%, ${T.sage} 100%)`,
-  }}>
-    <!-- Abstract imagery treatment -->
-    <div aria-hidden style={{
-      position: 'absolute',
-      inset: 0,
-      background: `radial-gradient(ellipse at 80% 30%, rgba(244,217,201,0.35), transparent 55%),
-                   radial-gradient(ellipse at 20% 90%, rgba(212,229,217,0.25), transparent 55%)`,
-    }}></div>
-    <div aria-hidden style={{
-      position: 'absolute',
-      inset: 0,
-      backgroundImage: 'repeating-linear-gradient(45deg, transparent 0 30px, rgba(255,255,255,0.03) 30px 31px)',
-    }}></div>
-
-    <!-- Image card -->
-    <div style={{
-      position: 'absolute',
-      right: isMobile ? '50%' : 80,
-      bottom: isMobile ? 60 : 80,
-      transform: isMobile ? 'translateX(50%)' : 'none',
-      borderRadius: T.radiusLg,
-      overflow: 'hidden',
-      boxShadow: '0 30px 80px rgba(0,0,0,0.4)',
-      border: '1px solid rgba(255,255,255,0.2)',
-    }}>
-      <Placeholder
-        kind="clinical"
-        label="Hero photo · clinical lab, morning light"
-        width={isMobile ? 260 : 420}
-        height={isMobile ? 160 : 260}
-        radius={0}
-      />
+<section class="hero">
+  <div class="hero__bg">
+    <div class="hero__bg-radial" aria-hidden></div>
+    <div class="hero__bg-grain" aria-hidden></div>
+    <div class="hero__img-card">
+      <div class="hero__img-placeholder">
+        <span class="hero__img-label">Hero photo · clinical lab, morning light</span>
+      </div>
     </div>
   </div>
 
-  <!-- Overlaid content -->
-  <div style={{
-    position: 'relative',
-    zIndex: 2,
-    padding: isMobile ? '120px 20px 0' : '180px 72px 0',
-    maxWidth: 1440,
-    margin: '0 auto',
-  }}>
-    <div style={{
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: 10,
-      color: 'rgba(255,255,255,0.75)',
-      marginBottom: isMobile ? 24 : 40,
-      fontFamily: '"JetBrains Mono", monospace',
-      fontSize: 12,
-      letterSpacing: 0.6,
-      textTransform: 'uppercase',
-    }}>
-      <span style={{
-        width: 20,
-        height: 1,
-        background: 'rgba(255,255,255,0.5)',
-      }}></span>
+  <div class="hero__content">
+    <div class="hero__eyebrow">
+      <span class="hero__eyebrow-line" aria-hidden></span>
       {C.hero.eyebrow}
     </div>
 
-    <h1 style={{
-      fontFamily: '"Instrument Serif", serif',
-      fontWeight: 400,
-      fontSize: isMobile ? 52 : 128,
-      lineHeight: 0.95,
-      letterSpacing: isMobile ? -1.5 : -4,
-      margin: 0,
-      color: '#fff',
-      maxWidth: 1100,
-    }}>
-      <span style={{ fontStyle: 'italic', color: T.sageSoft }}>
-        {C.hero.title[0]}
-      </span><br />
+    <h1 class="hero__title">
+      <em>{C.hero.title[0]}</em><br />
       {C.hero.title[1]}
     </h1>
 
-    <p style={{
-      marginTop: isMobile ? 24 : 40,
-      maxWidth: 520,
-      fontSize: isMobile ? 15 : 17,
-      lineHeight: 1.55,
-      color: 'rgba(255,255,255,0.78)',
-      margin: `${isMobile ? 24 : 40}px 0 0 0`,
-    }}>
-      {C.hero.sub}
-    </p>
+    <p class="hero__sub">{C.hero.sub}</p>
 
-    <div style={{
-      marginTop: isMobile ? 28 : 44,
-      display: 'flex',
-      gap: 12,
-      flexWrap: 'wrap',
-    }}>
-      <Button tone="white" size="lg" icon="arrow">{C.nav.contact}</Button>
+    <div class="hero__actions">
+      <a href="#contact" class="btn btn--white btn--lg">
+        {C.nav.contact}
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 10h12M12 6l4 4-4 4"/></svg>
+      </a>
     </div>
   </div>
 
-  <!-- Scroll hint -->
-  {!isMobile && (
-    <div style={{
-      position: 'absolute',
-      bottom: 28,
-      left: 72,
-      zIndex: 2,
-      fontFamily: '"JetBrains Mono", monospace',
-      fontSize: 11,
-      letterSpacing: 0.6,
-      textTransform: 'uppercase',
-      color: 'rgba(255,255,255,0.55)',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 10,
-    }}>
-      <span>Scroll</span>
-      <span style={{ width: 40, height: 1, background: 'rgba(255,255,255,0.4)' }} />
-    </div>
-  )}
+  <div class="hero__scroll" aria-hidden>
+    <span>Scroll</span>
+    <span class="hero__scroll-line"></span>
+  </div>
 </section>
+
+<style define:vars={{
+  ink: T.ink,
+  sageDeep: T.sageDeep,
+  sage: T.sage,
+  sageSoft: T.sageSoft,
+  sageMist: T.sageMist,
+}}>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    height: 820px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--ink) 0%, var(--sageDeep) 40%, var(--sage) 100%);
+  }
+  .hero__bg-radial {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 30%, rgba(244,217,201,0.35), transparent 55%),
+      radial-gradient(ellipse at 20% 90%, rgba(212,229,217,0.25), transparent 55%);
+  }
+  .hero__bg-grain {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(45deg, transparent 0 30px, rgba(255,255,255,0.03) 30px 31px);
+  }
+  .hero__img-card {
+    position: absolute;
+    right: 80px; bottom: 80px;
+    width: 420px; height: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .hero__img-placeholder {
+    width: 100%; height: 100%;
+    background: var(--sageMist);
+    position: relative;
+    background-image: repeating-linear-gradient(135deg, transparent 0 14px, rgba(74,138,123,0.18) 14px 15px);
+  }
+  .hero__img-label {
+    position: absolute;
+    left: 16px; bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--sageDeep);
+    opacity: 0.75;
+  }
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    padding: 180px 72px 0;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  .hero__eyebrow-line {
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: rgba(255,255,255,0.5);
+  }
+  .hero__title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 128px;
+    line-height: 0.95;
+    letter-spacing: -4px;
+    margin: 0 0 40px 0;
+    color: #fff;
+    max-width: 1100px;
+  }
+  .hero__title em {
+    font-style: italic;
+    color: var(--sageSoft);
+  }
+  .hero__sub {
+    max-width: 520px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.78);
+    margin: 0 0 44px 0;
+  }
+  .hero__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .hero__scroll {
+    position: absolute;
+    bottom: 28px; left: 72px;
+    z-index: 2;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero__scroll-line {
+    display: inline-block;
+    width: 40px; height: 1px;
+    background: rgba(255,255,255,0.4);
+  }
+
+  /* Shared buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 28px;
+    border-radius: 999px;
+    border: none;
+    font-weight: 500;
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 160ms ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn--white { background: #fff; color: #1a2e2a; }
+  .btn--lg { padding: 16px 28px; font-size: 15px; }
+  .btn--ink { background: #1a2e2a; color: #fff; }
+  .btn--sm { padding: 8px 16px; font-size: 13px; }
+</style>

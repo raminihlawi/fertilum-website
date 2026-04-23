@@ -1,70 +1,91 @@
 ---
 import { COPY } from '../lib/copy';
-import { TOKENS } from '../lib/tokens';
-import Button from './Button.astro';
+import { TOKENS as T } from '../lib/tokens';
 
-interface Props {
-  lang: string;
-  isMobile: boolean;
-}
-
+interface Props { lang: string; isMobile: boolean; }
 const { lang = 'en', isMobile = false } = Astro.props;
 const C = COPY[lang];
-const T = TOKENS;
 ---
 
-<section style={{
-  padding: isMobile ? '40px 20px 60px' : '80px 72px 120px',
-}}>
-  <div style={{
-    maxWidth: 1280,
-    margin: '0 auto',
-    background: T.sageMist,
-    borderRadius: T.radiusXl,
-    padding: isMobile ? '40px 24px' : '80px',
-    textAlign: 'center',
-    position: 'relative',
-    overflow: 'hidden',
-  }}>
-    <div aria-hidden style={{
-      position: 'absolute',
-      inset: 0,
-      background: `radial-gradient(circle at 20% 0%, rgba(74,138,123,0.18), transparent 40%),
-                   radial-gradient(circle at 80% 100%, rgba(244,217,201,0.25), transparent 40%)`,
-    }}></div>
-    <div style={{
-      position: 'relative',
-    }}>
-      <h2 style={{
-        fontFamily: '"Instrument Serif", serif',
-        fontWeight: 400,
-        fontSize: isMobile ? 32 : 56,
-        lineHeight: 1.05,
-        letterSpacing: -1.5,
-        margin: '0 auto 20px',
-        maxWidth: 900,
-        color: T.ink,
-      }}>
-        {C.cta.title}
-      </h2>
-      <p style={{
-        fontSize: isMobile ? 15 : 17,
-        lineHeight: 1.55,
-        color: T.inkSoft,
-        margin: '0 auto 32px',
-        maxWidth: 620,
-      }}>
-        {C.cta.sub}
-      </p>
-      <div style={{
-        display: 'inline-flex',
-        gap: 12,
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-      }}>
-        <Button tone="ink" size="lg" icon="arrow">{C.cta.primary}</Button>
-        <Button tone="ghost" size="lg" iconLeft="arrowDown">{C.cta.secondary}</Button>
+<section class="cta-section">
+  <div class="cta-section__inner">
+    <div class="cta-section__bg" aria-hidden></div>
+    <div class="cta-section__content">
+      <h2 class="cta-section__title">{C.cta.title}</h2>
+      <p class="cta-section__sub">{C.cta.sub}</p>
+      <div class="cta-section__actions">
+        <a href="#contact" class="cta-section__btn cta-section__btn--ink">
+          {C.cta.primary}
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 10h12M12 6l4 4-4 4"/></svg>
+        </a>
+        <a href="#" class="cta-section__btn cta-section__btn--ghost">
+          {C.cta.secondary}
+        </a>
       </div>
     </div>
   </div>
 </section>
+
+<style define:vars={{ sageMist: T.sageMist, ink: T.ink, inkSoft: T.inkSoft, lineStrong: T.lineStrong, radiusXl: T.radiusXl }}>
+  .cta-section { padding: 80px 72px 120px; }
+  .cta-section__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    background: var(--sageMist);
+    border-radius: var(--radiusXl);
+    padding: 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section__bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(74,138,123,0.18), transparent 40%),
+      radial-gradient(circle at 80% 100%, rgba(244,217,201,0.25), transparent 40%);
+    pointer-events: none;
+  }
+  .cta-section__content { position: relative; }
+  .cta-section__title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin: 0 auto 20px;
+    max-width: 900px;
+    color: var(--ink);
+  }
+  .cta-section__sub {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--inkSoft);
+    margin: 0 auto 32px;
+    max-width: 620px;
+  }
+  .cta-section__actions {
+    display: inline-flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cta-section__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 28px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: inherit;
+    transition: transform 160ms ease;
+  }
+  .cta-section__btn:hover { transform: translateY(-1px); }
+  .cta-section__btn--ink { background: var(--ink); color: #fff; }
+  .cta-section__btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--lineStrong);
+  }
+</style>

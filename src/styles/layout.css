@@ -1,0 +1,48 @@
+/* Global layout fixes for unitless CSS values */
+
+/* Flex and grid with implicit gaps */
+[style*="display: flex"],
+[style*="display: grid"] {
+  gap: 1rem !important;
+}
+
+/* Specific overrides */
+header > div {
+  gap: 28px !important;
+}
+
+nav {
+  gap: 32px !important;
+}
+
+section > div {
+  gap: 20px !important;
+}
+
+/* Padding and margins - ensure units */
+[style*="padding:"] {
+  padding: 28px !important;
+}
+
+[style*="margin:"] {
+  margin: 20px !important;
+}
+
+/* Font sizes */
+body {
+  font-size: 16px;
+}
+
+/* Better defaults */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Improve readability */
+h1, h2, h3 {
+  word-break: break-word;
+}
+
+p {
+  max-width: 100ch;
+}

@@ -1,24 +1,88 @@
 ---
 import { COPY } from '../lib/copy';
-import { TOKENS } from '../lib/tokens';
+import { TOKENS as T } from '../lib/tokens';
 
-interface Props {
-  lang: string;
-  isMobile: boolean;
-}
-
+interface Props { lang: string; isMobile: boolean; }
 const { lang = 'en', isMobile = false } = Astro.props;
 const C = COPY[lang];
-const T = TOKENS;
 ---
 
-<footer style={{
-  padding: isMobile ? '40px 20px' : '80px 56px',
-  background: T.ink,
-  color: '#fff',
-}}>
-  <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-    <p style={{ margin: 0, marginBottom: 40, fontSize: 18 }}>{C.footer.tagline}</p>
-    <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', margin: 0 }}>{C.footer.legal}</p>
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <span class="footer__logo">fertilum</span>
+        <p class="footer__tagline">{C.footer.tagline}</p>
+      </div>
+      <div class="footer__cols">
+        {C.footer.cols.map(col => (
+          <div class="footer__col">
+            <div class="footer__col-head">{col.h}</div>
+            {col.l.map(link => <a href="#" class="footer__col-link">{link}</a>)}
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>{C.footer.legal}</span>
+    </div>
   </div>
 </footer>
+
+<style>
+  .footer {
+    background: #1a2e2a;
+    color: #fff;
+    padding: 80px 72px 40px;
+  }
+  .footer__inner { max-width: 1440px; margin: 0 auto; }
+  .footer__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    margin-bottom: 60px;
+  }
+  .footer__logo {
+    font-family: 'Lobster', cursive;
+    font-size: 28px;
+    display: block;
+    margin-bottom: 16px;
+  }
+  .footer__tagline {
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+    max-width: 280px;
+  }
+  .footer__cols {
+    display: flex;
+    gap: 64px;
+  }
+  .footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer__col-head {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 4px;
+  }
+  .footer__col-link {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: color 160ms ease;
+  }
+  .footer__col-link:hover { color: #fff; }
+  .footer__bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+</style>
